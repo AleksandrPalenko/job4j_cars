@@ -2,21 +2,30 @@ package ru.job4j.model;
 
 
 import javax.persistence.*;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "car")
+@Table(name = "cars")
 public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String model;
-    private String brand;
+    private String description;
+    private byte[] photo;
 
     @ManyToOne
-    @JoinColumn(name = "engine_id", foreignKey = @ForeignKey(name = "ENGINE_ID_FK"))
+    @JoinColumn(name = "typeCar_id", foreignKey = @ForeignKey(name = "typeCar_id"))
+    private TypeCar typeCar;
+
+    @ManyToOne
+    @JoinColumn(name = "brand_id", foreignKey = @ForeignKey(name = "brand_id"))
+    private Brand brand;
+
+    @ManyToOne
+    @JoinColumn(name = "engine_id", foreignKey = @ForeignKey(name = "engine_id"))
     private Engine engine;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -29,11 +38,13 @@ public class Car {
     public Car() {
     }
 
-    public static Car of(String brand, String model, Engine engine) {
+    public static Car of(Brand brand, TypeCar typeCar, Engine engine, String description, byte[] photo) {
         Car car = new Car();
-        car.model = brand;
-        car.brand = model;
+        car.brand = brand;
+        car.typeCar = typeCar;
         car.engine = engine;
+        car.description = description;
+        car.photo = photo;
         return car;
     }
 
@@ -43,22 +54,6 @@ public class Car {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
     }
 
     public Engine getEngine() {
@@ -77,6 +72,38 @@ public class Car {
         this.drivers = drivers;
     }
 
+    public byte[] getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(byte[] photo) {
+        this.photo = photo;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setTypeCar(TypeCar typeCar) {
+        this.typeCar = typeCar;
+    }
+
+    public TypeCar getTypeCar() {
+        return typeCar;
+    }
+
+    public Brand getBrand() {
+        return brand;
+    }
+
+    public void setBrand(Brand brand) {
+        this.brand = brand;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -86,19 +113,24 @@ public class Car {
             return false;
         }
         Car car = (Car) o;
-        return id == car.id && Objects.equals(model, car.model);
+        return id == car.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, model);
+        return Objects.hash(id);
     }
 
     @Override
     public String toString() {
         return "Car{"
                 + "id=" + id
-                + ", name='" + model + '\''
+                + ", description='" + description + '\''
+                + ", photo=" + Arrays.toString(photo)
+                + ", typeCar=" + typeCar
+                + ", brand=" + brand
+                + ", engine=" + engine
+                + ", drivers=" + drivers
                 + '}';
     }
 }

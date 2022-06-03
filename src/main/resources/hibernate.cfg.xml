@@ -20,5 +20,9 @@
         <mapping class="ru.job4j.model.Car"/>
         <mapping class="ru.job4j.model.Driver"/>
         <mapping class="ru.job4j.model.Engine"/>
+        <mapping class="ru.job4j.model.Brand"/>
+        <mapping class="ru.job4j.model.TypeCar"/>
+        <mapping class="ru.job4j.model.User"/>
+        <mapping class="ru.job4j.model.Advertisement"/>
     </session-factory>
 </hibernate-configuration>

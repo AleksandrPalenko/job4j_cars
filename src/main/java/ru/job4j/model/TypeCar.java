@@ -4,20 +4,22 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "drivers")
-public class Driver {
+@Table(name = "typeCar")
+public class TypeCar {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
+    private int countOfDoors;
 
-    public Driver() {
+    public TypeCar() {
     }
 
-    public static Driver of(String name) {
-        Driver driver = new Driver();
-        driver.name = name;
-        return driver;
+    public static TypeCar of(String name, int countOfDoors) {
+        TypeCar typeCar = new TypeCar();
+        typeCar.name = name;
+        typeCar.countOfDoors = countOfDoors;
+        return typeCar;
     }
 
     public int getId() {
@@ -36,6 +38,14 @@ public class Driver {
         this.name = name;
     }
 
+    public int getCountOfDoors() {
+        return countOfDoors;
+    }
+
+    public void setCountOfDoors(int countOfDoors) {
+        this.countOfDoors = countOfDoors;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -44,20 +54,12 @@ public class Driver {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Driver driver = (Driver) o;
-        return id == driver.id && Objects.equals(name, driver.name);
+        TypeCar typeCar = (TypeCar) o;
+        return id == typeCar.id && Objects.equals(name, typeCar.name);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, name);
-    }
-
-    @Override
-    public String toString() {
-        return "Driver{"
-                + "id=" + id
-                + ", name='" + name + '\''
-                + '}';
     }
 }
