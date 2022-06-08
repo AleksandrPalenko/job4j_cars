@@ -1,7 +1,10 @@
 package ru.job4j.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -11,17 +14,24 @@ public class Advertisement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private boolean status;
-    private LocalDateTime created = LocalDateTime.now();
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
+    private Date created;
 
     @ManyToOne
     @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "user_id"))
     private User author;
 
-    public static Advertisement of(Boolean status, LocalDateTime created, User author) {
+    @ManyToOne
+    @JoinColumn(name = "car_id")
+    private Car car;
+
+    public static Advertisement of(Boolean status, User author, Car car) {
         Advertisement advertisement = new Advertisement();
         advertisement.status = status;
-        advertisement.created = created;
+        advertisement.created = new Date(System.currentTimeMillis());
         advertisement.author = author;
+        advertisement.car = car;
         return advertisement;
     }
 
@@ -41,16 +51,20 @@ public class Advertisement {
         this.status = status;
     }
 
-    public LocalDateTime getCreated() {
+    public Date getCreated() {
         return created;
     }
 
-    public void setCreated(LocalDateTime created) {
+    public void setCreated(Date created) {
         this.created = created;
     }
 
     public User getAuthor() {
         return author;
+    }
+
+    public Car getCar() {
+        return car;
     }
 
     @Override

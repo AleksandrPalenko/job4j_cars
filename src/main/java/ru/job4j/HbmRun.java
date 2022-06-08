@@ -69,9 +69,9 @@ public class HbmRun {
             userList.forEach(session::save);
 
             List<Advertisement> advertisementList = new ArrayList<>();
-            Advertisement advertisement1 = Advertisement.of(false, null, user1);
-            Advertisement advertisement2 = Advertisement.of(false, null, user2);
-            Advertisement advertisement3 = Advertisement.of(false, null, user3);
+            Advertisement advertisement1 = Advertisement.of(false, user1, car1);
+            Advertisement advertisement2 = Advertisement.of(false, user2, car2);
+            Advertisement advertisement3 = Advertisement.of(false, user3, car3);
             advertisementList.add(advertisement1);
             advertisementList.add(advertisement2);
             advertisementList.add(advertisement3);

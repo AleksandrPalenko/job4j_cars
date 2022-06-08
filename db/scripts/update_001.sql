@@ -19,7 +19,7 @@ CREATE TABLE if not exists brands(
     name varchar(200)
 );
 
-CREATE TABLE if not exists car(
+CREATE TABLE if not exists cars(
     id serial primary key,
     description text,
     photo bytea,
@@ -46,5 +46,6 @@ CREATE TABLE if not exists advertisements(
      id serial primary key,
      status boolean,
      created timestamp,
-     user_id int not null references user(id)
+     user_id int not null references users(id),
+     car_id int not null references cars(id)
 );
